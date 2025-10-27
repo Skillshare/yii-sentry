@@ -12,7 +12,6 @@ use Sentry\ClientBuilder;
 use Sentry\ClientInterface;
 use Sentry\Event;
 use Sentry\Severity;
-use Sentry\Transport\TransportFactoryInterface;
 use Sentry\Transport\TransportInterface;
 use Skillshare\YiiSentry\SentryLogRoute;
 use Yii;
@@ -184,9 +183,6 @@ class SentryLogRouteTest extends TestCase
 			})->once();
 		}
 
-		/** @var TransportFactoryInterface&\Mockery\MockInterface $transportFactory */
-		$transportFactory = Mockery::mock(TransportFactoryInterface::class);
-		$transportFactory->shouldReceive('create')->andReturn($transport);
-		return ((new ClientBuilder())->setTransportFactory($transportFactory))->getClient();
+		return ((new ClientBuilder())->setTransport($transport))->getClient();
 	}
 }
