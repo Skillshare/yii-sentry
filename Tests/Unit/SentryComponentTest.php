@@ -90,11 +90,10 @@ class SentryComponentTest extends TestCase
 	 */
 	public function testRegisterRaven(): void
 	{
-		$dsn       = 'http://tim:tam@bob.com/8675309';
+		$dsn       = 'http://tim@bob.com/8675309';
 		$publicKey = 'tim';
-		$secretKey = 'tam';
 		$dsnHost   = 'bob.com';
-		$projectId = 8675309;
+		$projectId = '8675309';
 
 		$environment = 'dev';
 		$release     = 'dev_release';
@@ -119,7 +118,6 @@ class SentryComponentTest extends TestCase
 		$dsnObj = $options->getDsn();
 		$this->assertSame($dsnHost, $dsnObj->getHost());
 		$this->assertSame($publicKey, $dsnObj->getPublicKey());
-		$this->assertSame($secretKey, $dsnObj->getSecretKey());
 		$this->assertSame($projectId, $dsnObj->getProjectId());
 	}
 
@@ -213,7 +211,7 @@ class SentryComponentTest extends TestCase
 		$callback = fn() => 1;
 
 		$sut->options = [
-			'dsn'         => 'http://tim:tam@bob.com/8675309',
+			'dsn'         => 'http://tim@bob.com/8675309',
 			'environment' => 'dev',
 			'release'     => 'dev_release',
 			'before_send' => $callback,
@@ -231,7 +229,6 @@ class SentryComponentTest extends TestCase
 		$dsn = $options->getDsn();
 		$this->assertEquals(8675309, $dsn->getProjectId());
 		$this->assertEquals('tim', $dsn->getPublicKey());
-		$this->assertEquals('tam', $dsn->getSecretKey());
 		$this->assertEquals('bob.com', $dsn->getHost());
 	}
 }
